@@ -13,9 +13,9 @@ Table of Contents
 
 ---
 
-# Getting Started
+## Getting Started
 
-## Prerequisites
+### Prerequisites
 
 First, you need `java` and `git` installed and in your user's `PATH`.  
 
@@ -25,7 +25,7 @@ code.
 
     $ git clone git://github.com/jaejunh/clj-espertool.git && cd esptool 
 
-## "clj-esptool" Overview
+### "clj-esptool" Overview
 
 clj-esptool is command line tool for testing Esper and Event Processing Langague(EPL) Statements.  If this is your first time
 working with "esper", please read these documents and example codes first:
@@ -43,24 +43,28 @@ After you have familiarized yourself with esper with clojure, take a look at the
 [market-data.clj](market-data.clj) to see how "A.2 Output for Un-aggregated and Un-grouped Queries"
 can be tested using clj-esptool.
 
+---
 
-# Using clj-esptool with Leiningen
 
-## Install Leiningen
+## Using clj-esptool with Leiningen
+
+### Install Leiningen
 
 The clj-esptool uses [leiningen 2.0](http://leiningen.org). Install Install Leiningen by following the
 [leiningen installation instructions](https://github.com/technomancy/leiningen).
 
 
-## Install lein exec 
+### Install lein exec 
 
 Although it's not neccessary, I recommend you to install [lein-exec](https://github.com/kumarshantanu/lein-exec)  to run example clojure script outside of REPL. 
 
 
-# First Demo: "select * from LogDataEvent"
+---
+
+## First Demo: "select * from LogDataEvent"
 
 
-## ESPER and RDMBS Comparison
+### ESPER and RDMBS Comparison
 
 Esper CEP is event processing which is very similar to RDBMS system, where you need to specify 
 
@@ -72,7 +76,7 @@ If you already have used RDBMS and SQL, you can think of "event type" as "table 
 
 
 
-## Event Types and Data Publisher Are Already Supplied with Code (Just Read!)
+### Event Types and Data Publisher Are Already Supplied with Code (Just Read!)
 
 In our first demo, I have already created LogDataEvent as 
 
@@ -112,7 +116,7 @@ Also, I have created simple data generator of LogDataEvent in
 ```
 
 
-## Try Test Run an EPL Statement Dynamically with Lein REPL
+### Try Test Run an EPL Statement Dynamically with Lein REPL
 
 Now let's try to supply 3. EPL Statement: "select * from LogDataEvent" in lein REPL.  
 
