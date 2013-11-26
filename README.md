@@ -8,7 +8,7 @@ Table of Contents
 
 * Getting Started  
 * Using clj-esptool with Leiningen 
-* Running "first demo: select * from LogDataEvent" with lein REPL 
+* First Demo: "select * from LogDataEvent" 
 * Commands Examples 
 
 ---
@@ -57,10 +57,10 @@ The clj-esptool uses [leiningen 2.0](http://leiningen.org). Install Install Lein
 Although it's not neccessary, I recommend you to install [lein-exec](https://github.com/kumarshantanu/lein-exec)  to run example clojure script outside of REPL. 
 
 
-# Running "first demo: select * from LogDataEvent" with lein REPL 
+# First Demo: "select * from LogDataEvent"
 
 
-# ESPER and RDMBS Comparison
+## ESPER and RDMBS Comparison
 
 Esper CEP is event processing which is very similar to RDBMS system, where you need to specify 
 
@@ -69,6 +69,10 @@ Esper CEP is event processing which is very similar to RDBMS system, where you n
 3. and "EPL statement".  
 
 If you already have used RDBMS and SQL, you can think of "event type" as "table or schema definition", the data as "row or record" in the table, and an EPL Statement as "SQL Statement (or maybe stored procedure in a sense that it is stored in the the Esper system once it is created).  
+
+
+
+## Event Types and Data Publisher Are Already Supplied with Code (Just Read!)
 
 In our first demo, I have already created LogDataEvent as 
 
@@ -107,6 +111,8 @@ Also, I have created simple data generator of LogDataEvent in
         (Thread/sleep 10)))))
 ```
 
+
+## Try Test Run an EPL Statement Dynamically with Lein REPL
 
 Now let's try to supply 3. EPL Statement: "select * from LogDataEvent" in lein REPL.  
 
