@@ -11,7 +11,7 @@ Learn to use Esper!
 
 * First Demo: "select * from LogDataEvent" 
 
-* Commands Examples 
+* Command Examples 
 
 
 
@@ -150,6 +150,105 @@ user.clj-esptool> (demo 5)
 ;; you will see 5 events fetched from log-data-publisher got processed.
 ;; To run more example, say 100000, (demo 100000).  
 ```
+
+
+## Command Examples
+
+You can always "(esp)" or "(esp :help)" in REPL to see brief example of command.
+Also, try take a look at "market-data.clj" example usages.
+
+Here is the out of (esp :help).
+
+
+### clj-esptool commands
+
+```clojure
+clj-esptool.core=> (esp)
+
+	===============================================================================
+	You can use following (esp :command-xxx ....)
+	===============================================================================
+	
+	1. Event-Type Definition Related Commands:
+		:list-type, :add-type, :remove-type, :display-type, 
+
+	2. Statement Related Commands:
+		:list,  :add, :remove, :display, :stop, :start
+
+	3. Sending Event Commands:
+		:shoot-init, :shoot
+
+
+ (*new)	4. Sevice Commands:
+		:list-service, :add-service, :remove-service, :use-service
+	===============================================================================
+	Examples)
+	===============================================================================
+
+	(esp)     ;; => show help!  (esp:help)
+	(esp :help)
+	
+	(esp :list-type)
+	(esp :add-type "MarketData" {"symbol" :string, "price": double, "volume": int, "omit" :string})
+	(esp :remove-type "MarketData") 
+	(esp :remove-type :all) (esp :remove-type "all")
+	(esp :display-type "MarketData")
+	
+	(esp :list)
+	(esp :add "select * from MarketData")
+	(esp :remove "s01")
+	(esp :remove :all) (esp :remove "all")
+	(esp :display "s01")
+	(esp :stop  :all) (esp :stop "all")
+	(esp :start :all) (esp :start "all")
+
+
+	(esp :shoot-init)
+	(esp :shoot 
+		0.2   				;; shoot delay second
+	    	"Market-data" 		;; event-type
+		["symbol", "volume", "price", "omit" ]	;; event properties
+		["IBMi", 100, 25.0, "some-string"])  ;; event data 
+
+	(esp :list-service)
+	(esp :add-service "test")
+	(esp :use-service)
+	(esp :use-service "test")
+	(esp :use-service)
+	(esp :remove-service "test")
+```
+
+### (optional configuration) How to run clojure test script
+
+lein has support for running clojure as script just like shell script.  In order to do that,
+you need to configure lein exec as mentioned earlier, and I have created simple "lein-x" shell
+to invoke "lein exec".  
+
+Let's say you have tested series of clj-esptool commands and you want to rerun that
+time to time.  Best way is to save those commands in file, and run it when necessary.
+
+To show you how that can be achieved easily, I have created an example script
+
+"market-data.clj".  
+
+
+In order to run this,  let's copy lein-x into your ~/bin directory
+
+```shell 
+mkdir -p ~/bin; cp lein-x  ~/bin 
+
+which lein-x  #to check lein-x is in your path.  If not, logout and login.
+
+lein-x market-data.clj "(mytest)"
+```
+
+First argument of lein-x is script name to load, and the second argument is optional
+in-line clojure code. (in our case, the test function name to be executed)
+
+
+
+
+
 
 
 
