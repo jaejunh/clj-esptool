@@ -62,30 +62,27 @@ Although it's not neccessary, I recommend you to install [lein-exec](https://git
 
 ## Running "first demo: select * from LogDataEvent" with Leiningen
 
+
+```shell
 $ lein repl
-$ ....
-$ user.clj-esptool> (future-call log-data-publisher) ;; example zeromq publisher spitting "syslog" like output.
+```
 
-$ user.clj-esptool> (esp :list-type) 
-$ ;; list registered event types.  You will see "LogDataEvent" I created for you.
+```clojure
+user.clj-esptool> (future-call log-data-publisher) ;; example zeromq publisher spitting "syslog" like output.
 
-$ user.clj-esptool> (esp :list) 
-$ ;; list registered EPL statements
-$ user.clj-esptool> (esp :add "select * from LogDataEvent") 
-$ ;; Statement "s1" will be added as "select * from LogDataEvent" being ready to processed.
+user.clj-esptool> (esp :list-type) 
+;; list registered event types.  You will see "LogDataEvent" I created for you.
 
-
-$ user.clj-esptool> (demo 5)
-$ ;; you will see 5 events fetched from log-data-publisher got processed.
-$ ;; To run more example, say 100000, (demo 100000).  
+user.clj-esptool> (esp :list) 
+;; list registered EPL statements
+user.clj-esptool> (esp :add "select * from LogDataEvent") 
+;; Statement "s1" will be added as "select * from LogDataEvent" being ready to processed.
 
 
- 
-
- 
+user.clj-esptool> (demo 5)
+;; you will see 5 events fetched from log-data-publisher got processed.
+;; To run more example, say 100000, (demo 100000).  
+```
 
 
 
-
-
----
