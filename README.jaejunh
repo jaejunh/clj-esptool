@@ -1,0 +1,170 @@
+2013.11.25 - Clean Up:
+		clj-esp to clj-esptool for publishing.  Thanks to PatternHatch Site.
+		
+2013.11.11 - Fix:
+		- "client" side is esper free!! (one less thread)
+
+2013.11.04 - Fix:
+	 	- clean-up printing for "old-events"
+		- clean-up return type
+
+2013.11.02 - Feature:
+		Cleaning up "default" service related.
+		Now "default" service contains "LogDataEvent" for testing.
+		
+		You can add more "services" by :add-service or :use-service
+		(:use-service sets current service)
+
+		- (esp :list-service)
+		- (esp :use-service "test") 
+		- (esp :add-service "test")
+		- (esp :remove-service "test")
+
+		Please take a look at "market-data.clj" for example usage!
+
+		
+2013.10.23 - Feature:  
+		- (esp :help) or (esp) for "help"
+		- (esp :stop "s0") (esp :stop :all)  also, :start is implemented
+		- "market-data.clj" shows above commands examples.
+	      
+	     	
+	     personal note:  
+		- map only returns lazy sequence. if you want to do 
+		transactional execution, wrap it with (doall ...)
+		- "apply" implementation is questionable. thus
+		instead of using (apply func arg1 arg2 ...) use (func arg1 arg2 ...)
+		<- take a look at "proxy" code. 
+
+	     design pattern:  (do-deep-call-and-member-func service "x")
+			      (do-light-call service "x" member-func) is more readable/clean/modular.
+			      try to think that as passing function pointer.
+
+
+	     cleanup unnecessary codes!
+	    
+
+2013.10.22 - debug: add (vector (configuration-get-statement...)) for return
+	     debug: esp-handler (server mode, future-call) checks for socket
+		    error (ie socket already in used)
+		    .:  when lein repl, it will tell you whether it is  
+			server mode/client mode!!!
+
+	     debug:  instead of using "global def", use reference and swap!
+		     for threadsafe variables.
+	    
+	     Feature:  following two remote calls are added.
+	     (esp :shoot-init ...)
+	     (esp :shoot ...)
+
+	     Feature:  (demo xxxxx)  will print dummy message every 10th data
+		       for clarity.
+
+	     
+2013.10.21 - clean up print statement (+timestamp printing)
+	     added lein-x shell script
+	
+	     
+2013.10.18 - add destroy-service
+	    
+2013.10.17 - major change
+	   :add-type :remove-type :list-type :display-type for "remote" call.
+	   look at "new" market-data.clj for usage!
+
+
+2013.10.15.1 - debug: global handler now handle "old-event" too
+2013.10.15 - added market-data.clj test code
+
+
+
+
+1. Install:
+
+lein deps
+
+
+2. Execute: By infinite data generator!!
+
+lein repl
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; inside REPL, you can typ following commands.
+;; statement management
+
+(esp :add b1-statement)
+(esp :add "select * from LogDataEvent")
+(esp :add "select * from ThisDontWorkEvent")
+(esp :add "select * from LogDataEvent where WrongSyntax =")
+
+(esp :list)
+
+(esp :remove :s1)
+(esp :remove :s2)
+(esp :remove :all)   ;; <---  try this, mo!!! ;; 2013.10.17 
+
+(esp :list)
+
+(esp :display :s0)
+
+;; updated: 2013.10.17  
+(def market-data-property {"symbol" :string,
+                                "volume" :int,
+                                "price" :double,
+                                "omit" :string })
+
+(esp :add-type "MarketData" market-data-property) 
+(esp :remove-type "MarketData")
+(esp :display-type "MarketData")
+(esp :list-type)
+
+
+;; added: 2013.10.22
+(esp :shoot-init)
+(esp :shoot 0.2 "MarketData" k [ "IBM", 100, 25.0, "[IBM, 100, 25.0]" ])
+;; If you want, you can still used local call, (shoot ....)
+
+
+
+
+
+;; execute esp
+
+;; to run 1000 events generated from "doc/syslog.2"
+
+(future-call log-data-generator)  ;; 2013.10.15  now you need to explicitly type this
+(demo 1000)
+(demo 10000)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+3. Execute: By test data file!!
+
+lein repl
+(load-file "market-data.clj")
+(mytest)
+
+;; if you need to "retest", you don't need to restart repl.  Instead, 
+(load-file "market-data.clj")
+(mytest)
+
+
+;; However, I recommend you need to run repl everytime you do a test.
+;; however, 
+
+
+;;  Note:  Please take a look at market-data.clj at your root folder.
+
+
+4. Execute as Script: 
+
+4.1 Preparation 
+cat lein_profile >> ~/.lein/profile.clj
+lein deps
+cp lein-x ~/bin/.
+chmod 755 ~/bin/lein-x
+
+4.2 Run
+lein-x market-data.clj
+lein-x market-data.clj "(mytest)"
+
+

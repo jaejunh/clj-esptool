@@ -1,0 +1,94 @@
+;;
+;; command
+
+
+
+;; 1. esper statement functions
+(esp-add statement)
+(esp-add statement statement-key)
+(esp-remove statement-key)
+(esp-list)
+(esp-display statement-key)
+
+;;(esper :define obj)
+;;(esp-define obj)
+
+
+;; 2. esper input functions 
+(esp-input obj feeder)
+(esp-input obj feeder couter)
+
+
+;; 3. esper service functions
+(esp-stop)
+(esp-run)
+(esp-run :verbose) 
+
+;; 4. esper :trace functions
+(esp-trace :engine)
+(esp-trace :statement-key)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(demo 10000)
+(mo script nlimit)
+(esp :remove [:s0|:all])
+(esp :reset)
+(esp :pause [:s0|:all])
+
+ 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(def stmts {})
+
+
+(defn print-help 
+   []
+   (println "help me..."))
+
+(defn esp-add
+   ([statement]
+     (def STATEMENTS (assoc STATEMENTS 
+			(keyword (format "%.4f" (rand))) 
+			(array-map :statement statement))))
+   ([statement statement-key]
+     (def STATEMENTS (assoc STATEMENTS 
+			statement-key 
+			(array-map :statement statement)))))
+(defn esp-remove
+   [statement-key]
+   (def STATEMENTS (dissoc STATEMENTS statement-key)))
+
+
+(defn esp-list
+   []
+   (println "============================================================")
+   (println (str "Printing All Statements(" (count STATEMENTS) "):"))
+   (println "============================================================")
+   (println STATEMENTS))
+
+
+(defn esp-display
+   [statement-key]
+   (println (statement-key STATEMENTS)))
+
+
+(defn gen-data-from-file
+   [filename]
+   (map parse-line (clojure.string/split (slurp filename) #"\n")))
+
+
+(defn feeder-1
+   [ ]
+   (let [ init-data (gen-data-from-file "doc/syslog") ]
+     (doseq [n (range) ]
+	(do-something)
+	(Thread/sleep 1)))) 
+    
+
+
+ 
+
+
+

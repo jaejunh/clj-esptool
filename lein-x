@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#(cat "$@"; echo "(mytest)(System/exit 0)" | lein exec -p
+
+if [ -z "$1" ]
+then 
+	echo "Usage: $0 source.clj"
+	echo "Usage(1-liner): $0 source.clj '(your-test-function-in-source.clj)'"
+#	echo "Usage(1-liner,Don't exit : $0 source.clj '(your-test-function-in-source.clj)' -n"
+elif [ "$3" = "-n" ]
+then 
+	(cat $1; echo $2) | lein exec -p
+else
+	(cat $1; echo $2; echo "(System/exit 0)") | lein exec -p 
+fi
