@@ -2,16 +2,19 @@
 
 Learn to use Esper!
 
----
 
-Table of Contents
+## Table of Contents
 
 * Getting Started  
+
 * Using clj-esptool with Leiningen 
+
 * First Demo: "select * from LogDataEvent" 
+
 * Commands Examples 
 
----
+
+
 
 ## Getting Started
 
@@ -24,6 +27,8 @@ following command to download the latest storm-starter code and change to the ne
 code.
 
     $ git clone git://github.com/jaejunh/clj-espertool.git && cd esptool 
+
+
 
 ### "clj-esptool" Overview
 
@@ -43,7 +48,7 @@ After you have familiarized yourself with esper with clojure, take a look at the
 [market-data.clj](market-data.clj) to see how "A.2 Output for Un-aggregated and Un-grouped Queries"
 can be tested using clj-esptool.
 
----
+
 
 
 ## Using clj-esptool with Leiningen
@@ -59,7 +64,7 @@ The clj-esptool uses [leiningen 2.0](http://leiningen.org). Install Install Lein
 Although it's not neccessary, I recommend you to install [lein-exec](https://github.com/kumarshantanu/lein-exec)  to run example clojure script outside of REPL. 
 
 
----
+
 
 ## First Demo: "select * from LogDataEvent"
 
@@ -116,7 +121,7 @@ Also, I have created simple data generator of LogDataEvent in
 ```
 
 
-### Try Test Run an EPL Statement Dynamically with Lein REPL
+### Try an EPL Statement Dynamically with Lein REPL
 
 Now let's try to supply 3. EPL Statement: "select * from LogDataEvent" in lein REPL.  
 
