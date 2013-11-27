@@ -1,7 +1,23 @@
-# Esper Command Tool and Example 
+# Clojure Esper Command Line Tool
 
-Learn to use Esper!
+Welcome.  I created this sample project to learn Esper with Clojure. 
+Esper in nature is java embedded library and CEP environment where 
+it's stand-out GPL software with commercial maturity to handle real 
+time event processing.  
 
+Yet ESPER libary really didn't have simple command line tool (such as SQLPlus in Oracle RDBMS)
+and it was difficult for me to see how EPL interacts with
+Esper and etc. I would like my friends at my company [embian](http://www.embian.com) to learn
+this CEP concept quickly by trying out EPL examples, not by hacking time consuming 
+embedded java client and server coding.
+ 
+
+After I have learned enough how to juggle Esper with Clojure with the tool,
+I decided to make it available to share with people, though premature project
+to help people like us.
+
+
+ 
 
 ## Table of Contents
 
