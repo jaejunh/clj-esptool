@@ -6,16 +6,14 @@ it's stand-out GPL software with commercial maturity to handle real
 time event processing.  
 
 Yet ESPER libary really didn't have simple command line tool (such as SQLPlus in Oracle RDBMS)
-and it was difficult for me to see how EPL interacts with
+and it was difficult for me to check how EPL interacts with
 Esper and etc. I would like my friends at my company [embian](http://www.embian.com) to learn
 this CEP concept quickly by trying out EPL examples, not by hacking time consuming 
 embedded java client and server coding.
  
 
-After I have learned enough how to juggle Esper with Clojure with the tool,
-I decided to make it available to share with people, though premature project
-to help people like us.
-
+Altough it's premature, I decided to make it available to public to ease 
+your experience of learning CEP and Esper hacking.  
 
  
 
