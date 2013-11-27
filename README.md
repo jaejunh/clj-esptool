@@ -61,7 +61,7 @@ The clj-esptool uses [leiningen 2.0](http://leiningen.org). Install Install Lein
 
 ### Install lein exec 
 
-Although it's not neccessary, I recommend you to install [lein-exec](https://github.com/kumarshantanu/lein-exec)  to run example clojure script outside of REPL. 
+Although it's not neccessary, it's very handy if you can run clojure script outside of REPL.  I recommend you to install [lein-exec](https://github.com/kumarshantanu/lein-exec)  to run the example script from your shell. 
 
 
 
@@ -71,19 +71,19 @@ Although it's not neccessary, I recommend you to install [lein-exec](https://git
 
 ### ESPER and RDMBS Comparison
 
-Esper CEP is event processing which is very similar to RDBMS system, where you need to specify 
+Esper CEP is event processing which is very similar to RDBMS's data repository model, where you need to specify 
 
 1. "event type" 
-2. the data of that "event type" 
+2. data of the "event type" 
 3. and "EPL statement".  
 
-If you already have used RDBMS and SQL, you can think of "event type" as "table or schema definition", the data as "row or record" in the table, and an EPL Statement as "SQL Statement (or maybe stored procedure in a sense that it is stored in the the Esper system once it is created).  
+If you already have used RDBMS and SQL, you can think of "event type" as "table or schema definition", the data as "row or record" in the table, and an EPL Statement as a "SQL Statement (or maybe a stored procedure in a sense that it is stored in the the Esper system once it is created).  
 
 
 
-### Event Types and Data Publisher Are Already Supplied with Code (Just Read!)
+### Example Event Type and Data Publisher Supplied with Code 
 
-In our first demo, I have already created LogDataEvent as 
+In our first demo, I have already created an example event type,  "LogDataEvent" as 
 
 ```clojure 
 ;; 1. "event type"
@@ -220,12 +220,13 @@ clj-esptool.core=> (esp)
 
 ### (optional configuration) How to run clojure test script
 
-lein has support for running clojure as script just like shell script.  In order to do that,
+lein has a support for running clojure as script just like shell script.  In order to run
+clojure script,
 you need to configure lein exec as mentioned earlier, and I have created simple "lein-x" shell
 to invoke "lein exec".  
 
 Let's say you have tested series of clj-esptool commands and you want to rerun that
-time to time.  Best way is to save those commands in file, and run it when necessary.
+time to time.  Best way is to save those commands in a file, and run it when necessary.
 
 To show you how that can be achieved easily, I have created an example script
 
@@ -242,7 +243,7 @@ which lein-x  #to check lein-x is in your path.  If not, logout and login.
 lein-x market-data.clj "(mytest)"
 ```
 
-First argument of lein-x is script name to load, and the second argument is optional
+First argument of lein-x is script filename to load, and the second argument is optional
 in-line clojure code. (in our case, the test function name to be executed)
 
 
