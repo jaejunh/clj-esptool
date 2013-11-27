@@ -2,7 +2,7 @@
   :description "Esper Command Line Tool with Clojure 
 		(Thanks to ESP with Esper Tutorial and ZeroMQ Tutorial 
 		on http://www.patternhatch.com/)"
-  :url "http://blog.embian.com"
+  :url "http://www.embian.com"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
