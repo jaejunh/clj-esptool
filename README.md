@@ -45,7 +45,7 @@ working with "esper", please read these documents and example codes first:
 
 
 After you have familiarized yourself with esper with clojure, take a look at the first example
-[market-data.clj](market-data.clj) to see how "A.2 Output for Un-aggregated and Un-grouped Queries"
+[market-data.clj](test-script/market-data.clj) to see how "A.2 Output for Un-aggregated and Un-grouped Queries"
 can be tested using clj-esptool.
 
 
@@ -240,7 +240,7 @@ mkdir -p ~/bin; cp lein-x  ~/bin
 
 which lein-x  #to check lein-x is in your path.  If not, logout and login.
 
-lein-x market-data.clj "(mytest)"
+lein-x test-script/market-data.clj "(mytest)"
 ```
 
 First argument of lein-x is script filename to load, and the second argument is optional
