@@ -8,8 +8,8 @@ time event processing.
 Yet ESPER libary really didn't have simple command line tool (such as SQLPlus in Oracle RDBMS)
 and it was difficult for me to check how EPL interacts with
 Esper and etc. I would like my friends at my company [embian](http://www.embian.com) to learn
-this CEP concept quickly by trying out EPL examples, not by hacking time consuming 
-embedded java client and server coding.
+this CEP concept quickly by trying out EPL examples, not by hacking time-consuming coding
+of real-time java client and server.
  
 
 Altough it's premature, I decided to make it available to public to ease 
