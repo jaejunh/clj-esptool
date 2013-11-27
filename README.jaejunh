@@ -20,13 +20,13 @@
 		- (esp :add-service "test")
 		- (esp :remove-service "test")
 
-		Please take a look at "market-data.clj" for example usage!
+		Please take a look at "test-script/market-data.clj" for example usage!
 
 		
 2013.10.23 - Feature:  
 		- (esp :help) or (esp) for "help"
 		- (esp :stop "s0") (esp :stop :all)  also, :start is implemented
-		- "market-data.clj" shows above commands examples.
+		- "test-script/market-data.clj" shows above commands examples.
 	      
 	     	
 	     personal note:  
@@ -69,11 +69,11 @@
 	    
 2013.10.17 - major change
 	   :add-type :remove-type :list-type :display-type for "remote" call.
-	   look at "new" market-data.clj for usage!
+	   look at "new" test-script/market-data.clj for usage!
 
 
 2013.10.15.1 - debug: global handler now handle "old-event" too
-2013.10.15 - added market-data.clj test code
+2013.10.15 - added test-script/market-data.clj test code
 
 
 
@@ -140,11 +140,11 @@ lein repl
 3. Execute: By test data file!!
 
 lein repl
-(load-file "market-data.clj")
+(load-file "test-script/market-data.clj")
 (mytest)
 
 ;; if you need to "retest", you don't need to restart repl.  Instead, 
-(load-file "market-data.clj")
+(load-file "test-script/market-data.clj")
 (mytest)
 
 
@@ -164,7 +164,7 @@ cp lein-x ~/bin/.
 chmod 755 ~/bin/lein-x
 
 4.2 Run
-lein-x market-data.clj
-lein-x market-data.clj "(mytest)"
+lein-x test-script/market-data.clj
+lein-x test-script/market-data.clj "(mytest)"
 
 
