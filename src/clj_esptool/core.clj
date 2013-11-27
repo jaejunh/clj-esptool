@@ -5,9 +5,12 @@
 	[ clojure.pprint ]  
 	[ clojure.tools.namespace.repl :only (refresh)] )
   (:import [org.jeromq ZMQ])      ;;jeromq
-  (:require  (cheshire [core :as c])) ;;jeromq
-)
+  (:require  (cheshire [core :as c])
+	     [ clj-time.local :as loc ]
+             [ clj-time.format :as tf ])
+) 
 
+	
  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 1. Define Data
@@ -29,7 +32,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (def ctx (ZMQ/context 1))
-(def shoot-now (atom 0))
+(def shoot-now (atom (System/currentTimeMillis)))
 (def sid (atom 0))
 
 (def default-service (atom nil))
@@ -69,23 +72,41 @@
     (make-hash (rest a) (rest b) (assoc r (first a) (first b))))) 
 
 (defn shoot-init [] 
-	(reset! shoot-now 0))
+	(reset! shoot-now (System/currentTimeMillis)))
 
 (defn  shoot
  [ service defer e f data ] 
   { :pre (number? defer) }
-    (if (> defer 0)  
-    	(doseq [ n (range 0 (* defer 1000) 100) ] 
-		(if (not= n (* defer 1000)) 
-		   (println "At D+" @shoot-now  ":  [noop]....................................."))
+  (let [elapsed (format "%.1f" (/ (- (System/currentTimeMillis) @shoot-now) 1000.0))
+	int-defer (int (* defer 100))]
+    (if (> int-defer 0) 
+	(do  
+		(println "At D+" elapsed  ":  [noop].....................................")
 		(Thread/sleep 100)
-;;		(send shoot-now inc 100)))
-		(swap! shoot-now + 100)))
+		(shoot service (- defer 0.1) e f data))
+  	(let [ ev (make-hash f data {}) ]
+  	  (println "At D+" elapsed ": [Send Data] " 
+		(dissoc ev "omit") " ===========================>")
+  	  (send-event service ev e))))) 
 
-  (let [ ev (make-hash f data {}) ]
-  	(println "At D+" @shoot-now ": [Send Data] " (dissoc ev "omit")  
-			" ===========================>")
-  	(send-event service ev e))) 
+(defn elapsed-event-handler-json
+  [new-events old-events statement service]
+  ;;(let [elapsed (/ (- (System/currentTimeMillis) @shoot-now) 100.0) ]
+  (let [elapsed (format "%.2f" (/ (- (System/currentTimeMillis) @shoot-now) 1000.0)) ]
+        (println "==>At D+" elapsed ", Triggered(" (.getName statement) ":"
+                (.toString (loc/format-local-time (loc/local-now) :t-time)) ")" )
+        (println
+                (clojure.string/replace (.getText statement) #"(?i)(select|from|where|group by|having)" "\n\t\t$1"))
+        (doseq [e new-events]
+                (if-not (nil? e)
+                        (do
+                          (println "[New-Event]\n"
+                                 (render-event service e)))))
+        (doseq [e old-events]
+                (if-not (nil? e)
+                        (do
+                          (println "\t\t\t\t|[Old-Event]\n\t\t\t\t|"
+                                (clojure.string/replace (render-event service e) #"[\n]" "\n\t\t\t\t|")))))))
  
 (defn try-shoot 
   [ service defer arg ]
@@ -149,6 +170,8 @@
 	{ :r r }))
 
 
+
+
 (defn esp-handler
  []
   (let [ s (.socket ctx ZMQ/REP) 
@@ -195,7 +218,8 @@
 	  ;;  Part 2:  Statement Commands
 	  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-	  "add"		(let [ r (try-new-statement @default-service statement-handler-json arg) ]
+	  ;"add"		(let [ r (try-new-statement @default-service statement-handler-json arg) ]
+	  "add"		(let [ r (try-new-statement @default-service elapsed-event-handler-json arg) ]
 			(try-statement @default-service #(get-statement-member %) (get r :r)))
 
 	  "remove"	(do (try-statement @default-service #(.destroy %) arg)

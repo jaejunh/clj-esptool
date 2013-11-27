@@ -155,20 +155,20 @@
 
 (defn statement-handler-json
   [new-events old-events statement service]
-        (println "==>Triggered(" (.getName statement) ":" 
-        	(.toString (loc/format-local-time (loc/local-now) :t-time)) ")" )
-  	(println   
-		(clojure.string/replace (.getText statement) #"(?i)(select|from|where|group by|having)" "\n\t\t$1"))
+        (println "==>Triggered(" (.getName statement) ":"
+                (.toString (loc/format-local-time (loc/local-now) :t-time)) ")" )
+        (println
+                (clojure.string/replace (.getText statement) #"(?i)(select|from|where|group by|having)" "\n\t\t$1"))
         (doseq [e new-events]
                 (if-not (nil? e)
                         (do
-			  (println "[New-Event]\n"
-				 (render-event service e)))))
+                          (println "[New-Event]\n"
+                                 (render-event service e)))))
         (doseq [e old-events]
                 (if-not (nil? e)
                         (do
-			  (println "\t\t\t\t|[Old-Event]\n\t\t\t\t|" 
-				(clojure.string/replace (render-event service e) #"[\n]" "\n\t\t\t\t|"))))))
+                          (println "\t\t\t\t|[Old-Event]\n\t\t\t\t|"
+                                (clojure.string/replace (render-event service e) #"[\n]" "\n\t\t\t\t|"))))))
 
 (defn create-listener
   [listener]

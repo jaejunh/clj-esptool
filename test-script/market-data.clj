@@ -41,7 +41,7 @@
 
 ;; register epl 
 
-(def a-2-1 "select irstream symbol, volume, price, omit from MarketData.win:time(5.5 sec)")
+(def a-2-1 "select irstream symbol, volume, price, omit from MarketData.win:time(5.50 sec)")
 
 
 (esp :list)
@@ -66,6 +66,9 @@
 (esp :shoot 0.8 "MarketData" k [ "IBM", 150, 22.0, "[IBM, 150, 22.0]" ]) 
 (esp :shoot 0.6 "MarketData" k [ "YAH", 11500, 3.0, "[YAH, 11500, 3.0]" ]) 
 (esp :shoot 1.0 "MarketData" k [ "YAH", 10500, 1.0, "[YAH, 10500, 1.0]" ]) 
+(println "Sleeping 5.5 second for windows")
+(Thread/sleep 5500)
+
 
 ;; clean-up
 
