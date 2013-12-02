@@ -2,7 +2,7 @@
 (use 'clj-esptool.esper)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; A.2. Output for Un-aggregated and Un-grouped Queries
+;; A.6. Output for Aggregated and Grouped Queries
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;
@@ -41,11 +41,11 @@
 
 ;; register epl 
 
-(def a-2-1 "select irstream symbol, volume, price, omit from MarketData.win:time(5.50 sec)")
+(def a-6-1 "select irstream symbol, volume,  sum(price) from MarketData.win:time(5.50 sec) group by symbol")
 
 
 (esp :list)
-(esp :add a-2-1)
+(esp :add a-6-1)
 (esp :list)
 (esp :list-type)
 
@@ -54,7 +54,7 @@
 
 ;; now, send data
 (defn mytest 
-  "test a-2-1"
+  "test a-6-1"
   []
 (esp :shoot-init)
 (esp :shoot 0.2 "MarketData" k [ "IBM", 100, 25.0, "[IBM, 100, 25.0]" ]) 
@@ -87,10 +87,9 @@
 )
 
 ;; help
-;; TODO: need more clean up on symbols: market-data-property, k, a-2-1
+;; TODO: need more clean up on symbols: market-data-property, k, a-6-1
 (println " ")
 (println " ")
 (println ".......  Please Type (mytest) to run this test " )
-(println ".......  epl: " a-2-1)
+(println ".......  epl: " a-6-1)
 (println " ")
-
